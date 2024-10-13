@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验2-弹性盒子</title>
+    <link rel="stylesheet" href=".\static\font_icon\iconfont.css">
+    <style>
+        /* * {
+            font-family: Arial, Helvetica, sans-serif;
+        } */
+
+        html {
+            font-size: 16px;
+        }
+
+        .box {
+            width: 375px;
+            margin: auto;
+        }
+
+        header {
+            width: 100%;
+            height: 100px;
+            background-color: #F0F0F0;
+            display: grid;
+        }
+
+        section {
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around
+        }
+
+        footer {
+            /* 固定定位 */
+            position: fixed;
+            bottom: 0;
+            /* 占满宽度,这里只能使用px了，不能用100%，因为我是用了固定定位，而不是参考定位了！ */
+            width: 375px;
+            height: 60px;
+            display: flex;
+            background-color: aliceblue;
+        }
+
+        .index {
+            width: 100%;
+            height: 50px;
+            margin: 0;
+            justify-content: center;
+            display: flex;
+            background-color: #09B465;
+        }
+
+        .index div:nth-child(1) {
+            width: 15%;
+            height: 65%;
+            margin: auto 0 auto auto;
+            padding: 0 0 0 1%;
+            background-color: #41CF86;
+            /* 设置字体 */
+            text-align: center;
+            line-height: 32.5px;
+            color: #fff;
+            font-weight: bold;
+            /* 切圆角 */
+            border-top-left-radius: 25% 50%;
+            border-bottom-left-radius: 25% 50%;
+        }
+
+        .index div:nth-child(2) {
+            width: 15%;
+            height: 65%;
+            margin: auto auto auto 0;
+            padding: 0 1% 0 0;
+            background-color: #41CF86;
+            /* 设置字体 */
+            text-align: center;
+            line-height: 32.5px;
+            color: #fff;
+            font-weight: bold;
+            /* 切圆角 */
+            border-top-right-radius: 25% 50%;
+            border-bottom-right-radius: 25% 50%;
+        }
+
+        .index div:hover {
+            background-color: #93EFC3;
+            /* 鼠标悬停时略微放大 */
+            transform: scale(1.05);
+            /* 鼠标悬停时加深阴影 */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            /* 鼠标悬停时透明度变化 */
+            opacity: 0.8;
+        }
+
+        .banner {
+            width: 100%;
+            height: 50px;
+            margin: 0;
+            display: flex;
+            background-color: rgb(209, 238, 192, 50%);
+        }
+
+        .banner div {
+            width: 33%;
+            height: 100%;
+            margin: auto;
+            /* 设置字体 */
+            text-align: center;
+            line-height: 50px;
+            color: #000;
+            font-weight: bold;
+            /*    border: 1px solid #fff;
+            box-sizing: border-box; */
+        }
+
+        .banner div:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            opacity: 0.8;
+        }
+
+
+        section div {
+            width: 50%;
+            height: auto;
+            background-color: rgb(254, 255, 245);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /*  text-align: center;*/
+            color: rgb(0, 0, 0);
+            border: 2px solid rgba(0, 0, 0, 10%);
+            box-sizing: border-box;
+            /* 切圆角 */
+            border-radius: 5%;
+        }
+
+        section div:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            opacity: 0.8;
+            /* 触发动画 */
+            animation: bounce 0.6s;
+        }
+
+        section div img {
+            width: 100%;
+            height: 100%;
+            /* 保持比例并裁剪溢出的部分 */
+            object-fit: cover;
+            /* 切圆角 */
+            border-radius: 5%;
+        }
+
+        section span {
+            font-size: 13px;
+        }
+
+        footer div {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        footer div:hover {
+            background-color: blanchedalmond;
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            opacity: 0.8;
+        }
+
+        footer i {
+            font-size: 25px;
+        }
+
+        footer span {
+            font-size: 15px;
+        }
+
+        /* 修改 #round-icon */
+        #round-icon {
+            /* 宽度比周围元素大 */
+            width: 70px;
+            /* 高度比周围元素大 */
+            height: 70px;
+            /* 圆形 */
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 10%);
+            box-sizing: border-box;
+            display: flex;
+            /* 让图标在圆形内部居中 */
+            justify-content: center;
+            align-items: center;
+            /* 上移圆形，保持整体对齐 */
+            margin-top: -15px;
+            /* 添加背景色确保圆形清晰 */
+            background-color: azure;
+
+        }
+
+        #round-icon:hover {
+            background-color: aquamarine;
+        }
+
+        /* 调整内部图标大小 */
+        #round-icon i {
+            font-size: 30px;
+            /* 让圆形内的图标更大 */
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <header>
+            <div class="index">
+                <div>热点</div>
+                <div>关注</div>
+            </div>
+            <div class="banner">
+                <div>校园生活</div>
+                <div>校园学习</div>
+                <div>校园活动</div>
+            </div>
+        </header>
+
+        <section>
+            <div>
+                <img src="./static/images/img1.jpg" alt="">
+                <span>冬青花开</span>
+            </div>
+            <div>
+                <img src="./static/images/img2.jpg" alt="">
+                <span>惊天电闪</span>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <img src="./static/images/img3.jpg" alt="">
+                <span>雨后秋叶</span>
+            </div>
+            <div>
+                <img src="./static/images/img4.jpg" alt="">
+                <span>芦苇曳曳</span>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <img src="./static/images/img5.jpg" alt="">
+                <span>青山绿水</span>
+            </div>
+            <div>
+                <img src="./static/images/img6.jpg" alt="">
+                <span>冬日镜湖</span>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <img src="./static/images/img7.jpg" alt="">
+                <span>独领风骚</span>
+            </div>
+            <div>
+                <img src="./static/images/img8.jpg" alt="">
+                <span>海岸之山</span>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <img src="./static/images/img9.jpg" alt="">
+                <span>生死永恒</span>
+            </div>
+            <div>
+                <img src="./static/images/img10.jpg" alt="">
+                <span>夕阳林海</span>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <img src="./static/images/img11.jpg" alt="">
+                <span>红花盛开</span>
+            </div>
+            <div>
+                <img src="./static/images/img12.jpg" alt="">
+                <span>渔舟唱晚</span>
+            </div>
+        </section>
+
+        <section style="height: 60px;">
+
+        </section>
+
+        <footer>
+            <div>
+                <i class="iconfont icon-kaquan"></i>
+                <span>卡券</span>
+            </div>
+            <div>
+                <i class="iconfont icon-youxichongzhi"></i>
+                <span>游戏充值</span>
+            </div>
+            <div id="round-icon">
+                <i class="iconfont icon-qua-copy"></i>
+            </div>
+            <div>
+                <i class="iconfont icon-zhuanzhang"></i>
+                <span>转账</span>
+            </div>
+            <div>
+                <i class="iconfont icon-wode"></i>
+                <span>我的</span>
+            </div>
+        </footer>
+    </div>
+
+</body>
+
+</html>
