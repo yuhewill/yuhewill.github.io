@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./static/lib/vue.next.js"></script>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        #app {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+
+        .task-list {
+            margin-top: 20px;
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .task span {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .task button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-left: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .task button.edit {
+            background-color: #007bff;
+        }
+
+        .task button:hover {
+            background-color: #c82333;
+        }
+
+        .task button.edit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>计划表</h1>
+        <input type="text" v-model="newTask" @keyup.enter="addTask" placeholder="添加新任务……" />
+        <div class="task-list">
+            <div class="task" v-for="(task, index) in tasks" :key="index">
+                <span>{{ task }}</span>
+                <button class="edit" @click="editTask(index)">编辑</button>
+                <button @click="deleteTask(index)">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    newTask: '',
+                    tasks: []
+                }
+            },
+            methods: {
+                addTask() {
+                    if (this.newTask.trim()) {
+                        this.tasks.push(this.newTask);
+                        this.newTask = '';
+                    }
+                },
+                editTask(index) {
+                    const updatedTask = prompt("编辑任务：", this.tasks[index]);
+                    if (updatedTask) {
+                        this.tasks.splice(index, 1, updatedTask);
+                    }
+                },
+                deleteTask(index) {
+                    this.tasks.splice(index, 1);
+                }
+            }
+        })
+        app.mount('#app');
+    </script>
+</body>
+
+</html>
+
+
+
+
+<!-- <stlyle>
+    @media (max-width: 500px) {
+    .task {
+    flex-direction: column;
+    align-items: flex-start;
+    }
+
+    .task button {
+    width: 100%;
+    margin-top: 5px;
+    }
+    }
+</stlyle> -->

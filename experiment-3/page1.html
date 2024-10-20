@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计划表1效果演示</title>
+    <script src="./static/lib/vue.next.js"></script>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #app {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .add-plan {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .add-plan input {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .add-plan button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #1f7966;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-plan button:hover {
+            background-color: #226d5d;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul li button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        ul li button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>待办事项列表</h1>
+        <div class="add-plan">
+            <input type="text" v-model="newTask" placeholder="请输入任务……">
+            <button @click="addTask">添加</button>
+        </div>
+        <ul>
+            <li v-for="(task, index) in tasks" :key="index">
+                {{ index + 1 }}. {{ task }}
+                <button @click="removeTask(index)">删除任务</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    newTask: '',
+                    tasks: []
+                }
+            },
+            methods: {
+                addTask() {
+                    if (this.newTask.trim()) {
+                        this.tasks.push(this.newTask);
+                        this.newTask = '';
+                    }
+                },
+                removeTask(index) {
+                    this.tasks.splice(index, 1);
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

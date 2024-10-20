@@ -4,22 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>羽翮的主页</title>
+    <link rel="stylesheet" href="./static/lib/styles-me.css">
+    <style>
+        .contact {
+            margin-top: 20px;
+        }
+
+        .experiments {
+            margin-top: 30px;
+        }
+
+        .experiments a {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .email-link img {
+            vertical-align: middle;
+        }
+    </style>
 </head>
 
 <body>
-    <p>
-        羽翮的个人网站。
-    </p>
-    <p>
-        我的邮箱：wx@yuhewill.com
-        <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=eQ4BOQAMERwOEBUVVxoWFA"
-            style="text-decoration:none;"><img
-                src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_02.png" /></a>
-    </p>
-    <p>
-        <a href="./experiment-2/index.html">实验2-弹性盒子</a>
-    </p>
+
+    <main>
+        <header>
+            <h1>羽翮的个人网站</h1>
+            <p>欢迎来到羽翮的个人网站！在这里，你可以找到我的联系信息以及我正在进行的实验项目。</p>
+        </header>
+
+        <section class="contact">
+            <h2>我的联系方式</h2>
+            <p>
+                我的邮箱：<a href="mailto:wx@yuhewill.com">wx@yuhewill.com</a>
+                <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=eQ4BOQAMERwOEBUVVxoWFA"
+                    class="email-link">
+                    <img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_02.png"
+                        alt="点击给我发邮件" />
+                </a>
+            </p>
+        </section>
+
+        <section class="experiments">
+            <h2>我的实验</h2>
+            <p>
+                <a href="./experiment-2/index.html">实验2 - 弹性盒子</a>
+                <a href="./experiment-3/index.html">实验3 - Vue.js的简单练习</a>
+            </p>
+        </section>
+    </main>
+
 </body>
 
 </html>
