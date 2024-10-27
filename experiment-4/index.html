@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车</title>
+    <script src="./lib/vue.next.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+
+        .select {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .product {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product img {
+            width: 70px;
+            border-radius: 5px;
+        }
+
+        p {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .price {
+            color: red;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .controls button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .controls button:last-child {
+            background-color: #ff4d4f;
+            margin-left: 10px;
+        }
+
+        .controls button:hover {
+            background-color: #0056b3;
+        }
+
+        .controls span {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .total {
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: right;
+            font-size: 1.2em;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+        }
+
+        .checkbox {
+            margin-right: 10px;
+        }
+
+        .coupon {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .coupon input {
+            width: 70%;
+            padding: 5px;
+        }
+
+        .coupon button {
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .coupon button:hover {
+            background-color: #218838;
+        }
+
+        .confirmation {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>购物车</h1>
+            <div class="select">
+                <input type="checkbox" :checked="allChecked" @change="toggleSelectAll" class="checkbox">全选/全不选
+            </div>
+            <div class="product" v-for="(item, index) in cart" :key="item.id">
+                <input type="checkbox" v-model="item.checked" class="checkbox">
+                <img :src="item.image" :alt="item.title">
+                <div>
+                    <h4>{{ item.title }}</h4>
+                    <p class="price">单价：{{ item.price }} 元</p>
+                    <p class="price">总价：{{ item.price * item.quantity }} 元</p>
+                </div>
+                <div class="controls">
+                    <button @click="decrease(item)">-</button>
+                    <span>{{ item.quantity }}</span>
+                    <button @click="add(item)">+</button>
+                    <button @click="removeItem(index)">删除</button>
+                </div>
+            </div>
+            <div v-if="cart.length === 0" class="empty-cart">购物车空空如也</div>
+            <div v-if="cart.length > 0" class="total">原价总金额：{{ totalAmount }} 元</div>
+
+            <div class="coupon">
+                <input type="text" v-model="couponCode" placeholder="输入优惠券代码">
+                <button :class="couponComplete?'btn-danger':'btn-success'" @click="toggleComplete">
+                    {{couponComplete?'取消优惠券':'使用优惠券'}}
+                </button>
+            </div>
+
+            <!--  <div class="confirmation" v-if="couponApplied">
+                <p>优惠券已应用，当前总金额：{{ discountedAmount }} 元</p>
+            </div> -->
+
+            <button v-if="cart.length > 0" @click="checkout">结算</button>
+
+            <div v-if="checkoutConfirmed" class="confirmation">
+                <h2>感谢您的购买！</h2>
+                <p>您已成功结算，实收总金额：{{ discountedAmount }} 元</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    cart: [
+                        { id: 1, title: '商品1', price: 10, quantity: 1, maxQuantity: 2, image: 'https://p0.meituan.net/movie/dc2fed6001e809e4553f90cc6fad9a59245170.jpg@1l_1e_1c_128w_180h', checked: false },
+                        { id: 2, title: '商品2', price: 20, quantity: 2, maxQuantity: 3, image: 'https://p0.meituan.net/moviemachine/3084e88f63eef2c6a0df576153a3fad0327782.jpg@1l_1e_1c_128w_180h', checked: false },
+                        { id: 3, title: '商品3', price: 30, quantity: 3, maxQuantity: 4, image: 'https://p0.meituan.net/movie/897b8364755949226995144bfc2261ee4493381.jpg@1l_1e_1c_128w_180h', checked: false },
+                    ],
+                    couponComplete: false,// 默认未完成
+                    couponCode: '',
+                    couponApplied: false,
+                    discount: 0,
+                    checkoutConfirmed: false,
+                };
+            },
+            computed: {
+                totalAmount() {
+                    return this.cart.reduce((total, item) => item.checked ? total + item.price * item.quantity : total, 0);
+                },
+                discountedAmount() {
+                    if (this.couponComplete) {
+                        this.discount = this.totalAmount * 0.1; // 10% discount
+                    } else {
+                        this.discount = 0;
+                    }
+                    return this.totalAmount - this.discount;
+                },
+                allChecked() {
+                    return this.cart.every(item => item.checked);
+                }
+            },
+            methods: {
+                add(item) {
+                    if (item.quantity < item.maxQuantity) {
+                        item.quantity++;
+                    } else {
+                        alert(`超出最大购买数量${item.maxQuantity}, 不可继续添加`);
+                    }
+                },
+                decrease(item) {
+                    if (item.quantity > 1) {
+                        item.quantity--;
+                    }
+                },
+                removeItem(index) {
+                    if (confirm('确定要删除该商品吗？')) {
+                        this.cart.splice(index, 1);
+                    }
+                },
+                toggleSelectAll(event) {
+                    const checked = event.target.checked;
+                    this.cart.forEach(item => {
+                        item.checked = checked;
+                    });
+                },
+                toggleComplete() {
+                    falg = !this.couponComplete;
+                    if (!falg) { // 取消使用
+                        this.couponCode = '';
+                        this.couponComplete = !this.couponComplete;
+
+                        return;
+                    }
+                    if (this.couponCode === 'WeiXiang') {
+
+                        this.couponComplete = !this.couponComplete;
+                        alert('优惠券已应用！');
+                    } else {
+                        alert('无效的优惠券代码！');
+                    }
+                },
+                checkout() {
+                    this.checkoutConfirmed = true;
+                }
+            }
+        });
+        app.mount('#app');
+    </script>
+</body>
+
+</html>
