@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+#board {
+    width: 480px;
+    height: 320px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    position: relative;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+.ball {
+    width: 10px;
+    height: 10px;
+    background-color: darkred;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.paddle {
+    width: 80px;
+    height: 10px;
+    background-color: darkcyan;
+    position: absolute;
+    bottom: 0;
+    border-radius: 5px;
+}
+
+#game-over {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+#score {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#instructions {
+    text-align: center;
+    margin: 20px;
+}
+
+#container {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#container div {
+    display: inline-block;
+}
+
+#restart-button,
+#start-button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#theme-selector {
+    margin: 20px auto;
+    display: block;
+    font-size: 16px;
+}
+
+/* Dark theme styles */
+.dark-theme {
+    background-color: #333 !important;
+}
+
+.dark-theme #board {
+    background-color: #555 !important;
+}
+
+.dark-theme .paddle {
+    background-color: #999 !important;
+}
+
+.dark-theme .ball {
+    background-color: #fff !important;
+}
+
+.brick {
+    width: 75px;
+    height: 20px;
+    background-color: blue;
+    border: 1px solid black;
+    position: absolute;
+}
+
+#brick-container {
+    margin-top: 30px;
+}

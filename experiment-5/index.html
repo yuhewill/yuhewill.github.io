@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>弹珠游戏</title>
+    <link rel="stylesheet" href="./static/style.css">
+    <script src="./static/lib/vue.next.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="instructions" v-if="!gameStarted">
+            <p>使用左箭头和右箭头控制挡板，尽量不让小球掉下去！</p>
+            <button id="start-button" @click="startGame">开始游戏</button>
+        </div>
+        <div id="container">
+            <div>
+                主题：
+            </div>
+            <div>
+                <select id="theme-selector" @change="changeTheme($event.target.value)"
+                    :disabled="gameStarted && !gameOver">
+                    <option value="default">默认</option>
+                    <option value="dark">黑暗</option>
+                </select>
+            </div>
+            <div>
+                （游戏进行时不可更改）
+            </div>
+        </div>
+        <div id="board" :class="{ 'dark-theme': isDarkTheme }">
+            <Ball :x="ballX" :y="ballY"></Ball>
+            <Paddle :x="paddleX"></Paddle>
+            <div id="brick-container"></div>
+            <div id="game-over" v-if="gameOver">游戏结束!</div>
+        </div>
+        <div id="score">分数: {{ score }}</div>
+
+        <button id="restart-button" v-if="gameOver" @click="resetGame">重新开始</button>
+    </div>
+    <script src="./static/app.js"></script>
+</body>
+
+</html>
