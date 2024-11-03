@@ -130,6 +130,10 @@ const app = Vue.createApp({
             }
         },
         endGame() {
+            // 释放所有按键
+            this.leftPressed = false;
+            this.rightPressed = false;
+
             this.gameOver = true;
             this.gameStarted = false;
             cancelAnimationFrame(this.gameLoop);
