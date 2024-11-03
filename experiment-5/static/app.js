@@ -89,18 +89,18 @@ const app = Vue.createApp({
         },
         checkCollisions() {
             if (this.ballX < 0 || this.ballX + 10 > 480) {
-                this.x = -this.x; // Reverse horizontal direction
+                this.x = -this.x;
             }
             if (this.ballY < 0) {
-                this.y = -this.y; // Reverse vertical direction
+                this.y = -this.y;
             } else if (this.ballY + 10 > 320) {
-                this.endGame(); // End game if ball falls below
+                this.endGame();
             }
             if (this.ballY + 10 > 320 - 10 &&
                 this.ballX + 10 > this.paddleX &&
                 this.ballX < this.paddleX + 80) {
-                this.y = -this.y; // Reverse vertical direction on paddle hit
-                this.score += 10; // Increment score
+                this.y = -this.y;
+                this.score += 10;
             }
             this.checkBrickCollisions();
         },
@@ -115,7 +115,7 @@ const app = Vue.createApp({
                     this.y = -this.y;
                     brick.style.display = "none";
                     this.brickCount--;
-                    this.score += 20; // Increment score by 20
+                    this.score += 20;
                     if (this.brickCount === 0) {
                         this.endGame();
                     }
