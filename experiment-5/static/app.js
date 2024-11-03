@@ -135,7 +135,7 @@ const app = Vue.createApp({
             this.rightPressed = false;
 
             this.gameOver = true;
-            this.gameStarted = false;
+            /* this.gameStarted = false; */ //这行是BUG, 重新开始任然应为true
             cancelAnimationFrame(this.gameLoop);
             alert("游戏结束，你的得分是：" + this.score);
         },
